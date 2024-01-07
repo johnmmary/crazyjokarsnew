@@ -1,0 +1,301 @@
+const smtpSettings = {
+  host: "smtp.example.com",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  username: "username@example.com",
+  password: "smtp password here",
+  rejectUnauthorized: true // or false, depending on your requirements
+};
+
+const emailSettings = {
+  fromName: "FROM NAME HERE",
+  fromEmail: "YOUR FROMEMAIL HERE",
+  subject: "SUBJECT HERE",
+  encoding: "base64",
+  charset: "8bit",
+  priority: "normal",
+  importance: "normal",
+  multipleThreads: true,
+  numberOfThreads: 8,
+  delayBetweenEmails: 3000,
+};
+
+const qrCodeSettings = {
+  generateQRCode: false,
+  qrCodeWidth: 2,
+  qrCodeHeight: 2,
+  qrCodeColorDark: "#000000",
+  qrCodeColorLight: "#ffffff",
+};
+
+const htmlToImageSettings = {
+  htmlToImageHtmlPath: "./htmltoimage.html",
+  htmlToImageHtmlEnabled: false, // Set to true to enable HTMLTOIMAGE attachment, false to disable
+  imageName: "embeddedImage.png",
+  imageCid: "htmltoimage@cid", 
+};
+
+const letterHtmlPath = "./letter.html"; 
+
+
+const attachmentSettings = {
+  attachmentHtmlEnabled: false, // Set to true to enable attachment, false to disable
+  attachmentHtmlPath: "./attachment.html",
+  attachmentHtmlFilename: "EraLLCinvoice.html",
+  encoding: "8bit", // Default encoding
+  availableEncodings: ["base64", "utf-8", "8bit"], // Available encoding options
+};
+
+const attachmentpdfSettings = {
+  attachmentPdfEnabled: false, // Set to true to enable PDF attachment, false to disable
+  htmlToPdfPath: "./attachmentpdf.html",
+  attachmentPdfFilename: "EraLLCinvoice.pdf",
+  encoding: "base64", // Encoding format for the attachment (base64, utf-8, or unicode)
+  size: "A4", // Page size (A4, Letter, etc.)
+  orientation: "landscape", // Page orientation (portrait or landscape)
+};
+
+const link = "https://example.com";
+const leadsFilePath = "leads.txt";
+
+const logoUrl = "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const placeholders = {
+  IP: {
+    generate: () => {
+      // Generate a random IP address (e.g., "192.168.1.1")
+      return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join(".");
+    },
+  },
+  COUNTRY: {
+    generate: () => {
+      // Generate a random country name
+      const countries = ["USA", "Canada", "UK", "Australia", "Germany", "France"];
+      return countries[Math.floor(Math.random() * countries.length)];
+    },
+  },
+  EMAIL: {
+    grabFromLeads: (leadsFilePath) => {
+      // Read and return an email address from leads.txt
+      const fs = require("fs");
+      try {
+        const data = fs.readFileSync(leadsFilePath, "utf8");
+        const emailAddresses = data.split("\n").map((line) => line.trim());
+        return emailAddresses.filter((email) => email)[0] || "";
+      } catch (error) {
+        console.error(`Error reading ${leadsFilePath}: ${error}`);
+        return "";
+      }
+    },
+  },
+  EMAILB64: {
+    grabAndConvertFromLeads: (leadsFilePath) => {
+      // Read, return, and convert an email address to Base64 from leads.txt
+      const email = module.exports.placeholders.EMAIL.grabFromLeads(leadsFilePath);
+      return Buffer.from(email).toString("base64");
+    },
+  },
+  NAME: {
+    grabFromEmail: (email) => {
+      // Extract and return the username part of an email address
+      const match = email.match(/^([^@]*)@/);
+      return match ? match[1] : "";
+    },
+  },
+  CHAR1: {
+    generate: () => {
+      // Generate 1 random letter
+      return generateRandomLetter(1);
+    },
+  },
+  CHAR2: {
+    generate: () => {
+      // Generate 2 random letters
+      return generateRandomLetter(2);
+    },
+  },
+  CHAR3: {
+    generate: () => {
+      // Generate 3 random letters
+      return generateRandomLetter(3);
+    },
+  },
+  CHAR4: {
+    generate: () => {
+      // Generate 4 random letters
+      return generateRandomLetter(4);
+    },
+  },
+  CHAR5: {
+    generate: () => {
+      // Generate 5 random letters
+      return generateRandomLetter(5);
+    },
+  },
+  CHAR6: {
+    generate: () => {
+      // Generate 6 random letters
+      return generateRandomLetter(6);
+    },
+  },
+  CHAR7: {
+    generate: () => {
+      // Generate 7 random letters
+      return generateRandomLetter(7);
+    },
+  },
+  CHAR8: {
+    generate: () => {
+      // Generate 8 random letters
+      return generateRandomLetter(8);
+    },
+  },
+  CHAR9: {
+    generate: () => {
+      // Generate 9 random letters
+      return generateRandomLetter(9);
+    },
+  },
+  CHAR10: {
+    generate: () => {
+      // Generate 10 random letters
+      return generateRandomLetter(10);
+    },
+  },
+  NUM1: {
+    generate: () => {
+      // Generate 1 random rotating number
+      return generateRandomRotatingNumber(1);
+    },
+  },
+  NUM2: {
+    generate: () => {
+      // Generate 2 random rotating numbers
+      return generateRandomRotatingNumber(2);
+    },
+  },
+  NUM3: {
+    generate: () => {
+      // Generate 3 random rotating numbers
+      return generateRandomRotatingNumber(3);
+    },
+  },
+  NUM4: {
+    generate: () => {
+      // Generate 4 random rotating numbers
+      return generateRandomRotatingNumber(4);
+    },
+  },
+  NUM5: {
+    generate: () => {
+      // Generate 5 random rotating numbers
+      return generateRandomRotatingNumber(5);
+    },
+  },
+  NUM6: {
+    generate: () => {
+      // Generate 6 random rotating numbers
+      return generateRandomRotatingNumber(6);
+    },
+  },
+  NUM7: {
+    generate: () => {
+      // Generate 7 random rotating numbers
+      return generateRandomRotatingNumber(7);
+    },
+  },
+  NUM8: {
+    generate: () => {
+      // Generate 8 random rotating numbers
+      return generateRandomRotatingNumber(8);
+    },
+  },
+  NUM9: {
+    generate: () => {
+      // Generate 9 random rotating numbers
+      return generateRandomRotatingNumber(9);
+    },
+  },
+  NUM10: {
+    generate: () => {
+      // Generate 10 random rotating numbers
+      return generateRandomRotatingNumber(10);
+    },
+  },
+  DATE: {
+    getCurrent: () => {
+      // Get the current date and time for America/Adak
+      return getCurrentDateTime();
+    },
+  },
+};
+
+function generateRandomLetter(length) {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    result += alphabet.charAt(randomIndex);
+  }
+  return result;
+}
+
+function generateRandomRotatingNumber(length) {
+  const baseNumber = Math.floor(Math.random() * 10);
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += ((baseNumber + i) % 10).toString();
+  }
+  return result;
+}
+
+function getCurrentDateTime() {
+  const now = new Date();
+  return now.toLocaleString("en-US", { timeZone: "America/Adak" });
+}
+
+const settings = {
+  smtpSettings,
+  emailSettings,
+  qrCodeSettings,
+  htmlToImageSettings,
+  attachmentSettings,
+  attachmentpdfSettings,
+  link,
+  logoUrl,
+  leadsFilePath,
+  letterHtmlPath, 
+  placeholders,
+};
+
+module.exports = settings;
