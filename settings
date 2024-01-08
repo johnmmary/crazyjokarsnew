@@ -9,8 +9,10 @@ const smtpSettings = {
 
 const emailSettings = {
   fromName: "FROM NAME HERE",
-  fromEmail: "YOUR FROMEMAIL HERE",
-  subject: "SUBJECT HERE",
+  fromNameEncoding: "utf-8", // Add this line or base64
+  fromEmail: "FROM EMAIL HERE",
+  subject: "test",
+  subjectEncoding: "utf-8", // And this line or base64
   encoding: "base64",
   charset: "8bit",
   priority: "normal",
